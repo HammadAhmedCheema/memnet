@@ -96,7 +96,7 @@ python -m auraforensic.main
 
 ## 🆘 Troubleshooting
 
-- **ModuleNotFoundError (mft.xxx)**: Ensure you are running the tool with `python -m auraforensic.main` from the project root.
+- **ModuleNotFoundError (auraforensic.xxx)**: Ensure you are running the tool with `python -m auraforensic.main` from the project root.
 - **Volatility Layer Failure**: Verify your symbol server configuration or ensure you are using a supported Windows memory image.
 - **AI Analyst Timeout**: Check your internet connection and ensure your Gemini API key has sufficient quota.
 
