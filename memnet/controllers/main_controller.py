@@ -554,7 +554,7 @@ class MainController:
             cursor = conn.cursor()
             
             # 1. Process Discovery (Parents & Children)
-            cursor.execute("SELECT result_json FROM plugin_cache WHERE plugin_name = 'windows.pslist.PsList'")
+            cursor.execute("SELECT results_json FROM scan_results WHERE plugin_name = 'windows.pslist.PsList'")
             ps_row = cursor.fetchone()
             if ps_row:
                 procs = json.loads(ps_row[0])
