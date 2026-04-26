@@ -30,7 +30,8 @@ PLUGIN_MAP = {
     "windows.registry.userassist.UserAssist": userassist.UserAssist,
     "windows.registry.printkey.PrintKey": printkey.PrintKey,
     "windows.filescan.FileScan": filescan.FileScan,
-    "windows.pedump.PEDump": pedump.PEDump
+    "windows.pedump.PEDump": pedump.PEDump,
+    "yarascan.YaraScan": yarascan.YaraScan
 }
 
 

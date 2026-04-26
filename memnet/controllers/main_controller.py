@@ -9,7 +9,7 @@ from memnet.controllers.specialist_worker import SpecialistWorker
 from memnet.controllers.vad_worker import VadCacheWorker
 from memnet.forensics.tor_analyzer import TorAnalyzer
 from memnet.constants.plugin_map import PLUGIN_MAP
-from memnet.models.database import init_db, insert_scan_result, cleanup_session_db
+from memnet.models.database import init_db, insert_scan_result, cleanup_session_db, get_connection, get_all_scan_results
 
 class MainController:
     def __init__(self):
@@ -185,7 +185,6 @@ class MainController:
             
             # Store in session for AI/Re-use
             self.session_data[plugin_name] = results
-            from memnet.models.database import insert_scan_result
             insert_scan_result(plugin_name, json.dumps(results))
 
             # Update Dashboard Stats
@@ -285,7 +284,6 @@ class MainController:
             view = self.view.extraction_view
             dash = self.view.dashboard_view
             # Sync to Session DB
-            from memnet.models.database import insert_scan_result
             insert_scan_result(f"specialist_{task_type}", json.dumps(results))
             
             # Update Dashboard
@@ -363,7 +361,6 @@ class MainController:
         self.view.ai_analyst_view.status_label.setText("// AI SESSION INITIALIZED")
         
         # Pull initial context from Session DB
-        from memnet.models.database import get_all_scan_results
         results = get_all_scan_results()
         count = len(results)
         
@@ -413,7 +410,6 @@ class MainController:
                 res = engine.run_plugin(plugin)
                 result_str = json.dumps(res[:50]) # Truncate for AI brevity
             elif tool_name == "get_session_results":
-                from memnet.models.database import get_all_scan_results
                 results = get_all_scan_results()
                 # Briefly summarize the results for the AI
                 summary = {}
@@ -443,7 +439,6 @@ class MainController:
     def update_ai_artifact_count(self):
         """Syncs the UI counter with session DB state."""
         try:
-            from memnet.models.database import get_all_scan_results
             results = get_all_scan_results()
             self.view.ai_analyst_view.artifact_counter.setText(f"ARTIFACTS AVAILABLE: {len(results)}")
         except:
@@ -476,7 +471,6 @@ class MainController:
         self.view.graph_view.info_label.setText(f"// ANALYZING RELATIONSHIPS FOR PID {target_pid}")
         
         # Load data from DB
-        from memnet.models.database import get_all_scan_results
         rows = get_all_scan_results()
         
         ps_data = []
@@ -543,7 +537,7 @@ class MainController:
             if name == "Unknown":
                 conn = get_connection()
                 cursor = conn.cursor()
-                cursor.execute("SELECT result_json FROM plugin_cache WHERE plugin_name = 'windows.pslist.PsList'")
+                cursor.execute("SELECT results_json FROM scan_results WHERE plugin_name = 'windows.pslist.PsList'")
                 ps_row = cursor.fetchone()
                 conn.close()
                 if ps_row:
@@ -583,7 +577,7 @@ class MainController:
                         self.view.graph_view.add_forensic_edge(str(pid), child_pid)
 
             # 2. Network Discovery
-            cursor.execute("SELECT result_json FROM plugin_cache WHERE plugin_name = 'windows.netstat.NetStat'")
+            cursor.execute("SELECT results_json FROM scan_results WHERE plugin_name = 'windows.netstat.NetStat'")
             net_row = cursor.fetchone()
             if net_row:
                 conns = json.loads(net_row[0])
