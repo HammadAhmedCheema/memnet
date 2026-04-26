@@ -1,13 +1,13 @@
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QTabWidget
-from auraforensic.views.dashboard import DashboardWidget
-from auraforensic.views.ai_analyst_view import AIAnalystViewWidget
-from auraforensic.views.graph_view import GraphViewWidget
-from auraforensic.views.tor_view import TorEvidenceWidget
-from auraforensic.views.styles import get_stylesheet
-from auraforensic.views.base_forensic_view import BaseForensicView
-from auraforensic.views.extraction_view import ExtractionWidget
-from auraforensic.constants.plugin_map import TAB_CONFIG
+from memnet.views.dashboard import DashboardWidget
+from memnet.views.ai_analyst_view import AIAnalystViewWidget
+from memnet.views.graph_view import GraphViewWidget
+from memnet.views.tor_view import TorEvidenceWidget
+from memnet.views.styles import get_stylesheet
+from memnet.views.base_forensic_view import BaseForensicView
+from memnet.views.extraction_view import ExtractionWidget
+from memnet.constants.plugin_map import TAB_CONFIG
 from PyQt6.QtWidgets import QProgressBar, QLabel
 
 class MainWindow(QMainWindow):
@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("AuraForensics PRO // Memory Analysis Environment")
+        self.setWindowTitle("MemNet PRO // Memory Analysis Environment")
         self.setGeometry(100, 100, 1260, 900)
         self.setStyleSheet(get_stylesheet())
         

@@ -1,12 +1,12 @@
-# AuraForensics v2.8 🕵️‍♂️
+# MemNet v2.8 🕵️‍♂️
 
-**AuraForensics** is a state-of-the-art memory forensics platform developed for Phase 4 of the University Digital Forensics program. It is designed for **transient, zero-footprint investigations**, combining the power of **Volatility 3** with a proprietary **Gemini-powered AI Analyst** for real-time artifact correlation.
+**MemNet** is a state-of-the-art memory forensics platform developed for Phase 4 of the University Digital Forensics program. It is designed for **transient, zero-footprint investigations**, combining the power of **Volatility 3** with a proprietary **Gemini-powered AI Analyst** for real-time artifact correlation.
 
 ---
 
 ## 🚀 Tool Overview
 
-Unlike traditional forensic suites that rely on persistent databases, AuraForensics utilizes a **Transient SQL Architecture**. Forensic results are stored in a volatile session buffer that is automatically securely deleted upon application exit, ensuring that sensitive evidence does not persist on the analyst's machine.
+Unlike traditional forensic suites that rely on persistent databases, MemNet utilizes a **Transient SQL Architecture**. Forensic results are stored in a volatile session buffer that is automatically securely deleted upon application exit, ensuring that sensitive evidence does not persist on the analyst's machine.
 
 ### Key Capabilities
 
@@ -19,7 +19,7 @@ Unlike traditional forensic suites that rely on persistent databases, AuraForens
 
 ## 🏗️ Installation & Prerequisites
 
-AuraForensics requires **Python 3.10 or 3.11**.
+MemNet requires **Python 3.10 or 3.11**.
 
 ### 📋 Prerequisites
 
@@ -54,7 +54,7 @@ The following packages are essential for the forensic engine:
 
 ## 🔑 AI Analyst Configuration
 
-AuraForensics currently exclusively supports the **Google Gemini API** for intelligent artifact correlation. Other AI providers (e.g., OpenAI, Anthropic) are not supported in the current version.
+MemNet currently exclusively supports the **Google Gemini API** for intelligent artifact correlation. Other AI providers (e.g., OpenAI, Anthropic) are not supported in the current version.
 
 1. Obtain an API Key from the [Google AI Studio](https://aistudio.google.com/).
 2. Create a file named `api_key` in the root directory:
@@ -72,7 +72,7 @@ AuraForensics currently exclusively supports the **Google Gemini API** for intel
 To launch the Forensic Suite:
 
 ```bash
-python -m auraforensic.main
+python -m memnet.main
 ```
 
 ### Typical Workflow
@@ -96,7 +96,7 @@ python -m auraforensic.main
 
 ## 🆘 Troubleshooting
 
-- **ModuleNotFoundError (auraforensic.xxx)**: Ensure you are running the tool with `python -m auraforensic.main` from the project root.
+- **ModuleNotFoundError (memnet.xxx)**: Ensure you are running the tool with `python -m memnet.main` from the project root.
 - **Volatility Layer Failure**: Verify your symbol server configuration or ensure you are using a supported Windows memory image.
 - **AI Analyst Timeout**: Check your internet connection and ensure your Gemini API key has sufficient quota.
 

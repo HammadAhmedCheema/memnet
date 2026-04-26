@@ -1,5 +1,5 @@
 from PyQt6.QtCore import QThread, pyqtSignal
-from auraforensic.ai.gemini_client import GeminiClient
+from memnet.ai.gemini_client import GeminiClient
 
 class AIWorker(QThread):
     finished = pyqtSignal(str) # The AI Markdown response

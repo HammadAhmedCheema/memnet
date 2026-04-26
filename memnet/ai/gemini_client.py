@@ -46,7 +46,7 @@ class GeminiClient:
         """Starts a conversational session with tools."""
         config = {
             "tools": self.get_tool_definitions(),
-            "system_instruction": "You are the AuraForensics AI Analyst. Correlate artifacts and use tools to investigate."
+            "system_instruction": "You are the MemNet AI Analyst. Correlate artifacts and use tools to investigate."
         }
         return self.client.chats.create(model=self.model_name, config=config)
 

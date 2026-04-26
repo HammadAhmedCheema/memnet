@@ -6,7 +6,7 @@ Sub-title: AI-Augmented Volatile Memory Analysis Suite
 Target: Digital Forensic Investigators & Cyber Security Researchers
 
 1. Executive Summary
-   AuraForensics is a GUI-based digital forensics tool designed to simplify memory analysis using the Volatility 3 framework. It bridges the gap between raw data extraction and actionable intelligence by integrating Gemini 3 Flash to generate automated, professional-grade forensic reports in Markdown format.
+   MemNet is a GUI-based digital forensics tool designed to simplify memory analysis using the Volatility 3 framework. It bridges the gap between raw data extraction and actionable intelligence by integrating Gemini 3 Flash to generate automated, professional-grade forensic reports in Markdown format.
 2. Technical Stack
    Core Engine: Python 3.11+
 

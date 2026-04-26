@@ -1,14 +1,14 @@
-# AuraForensics v2.8 : User Guide 📑
+# MemNet v2.8 : User Guide 📑
 
-Welcome to the **AuraForensics User Guide**. This document provides an exhaustive walkthrough of the tool's features, forensic workflows, and specialized modules.
+Welcome to the **MemNet User Guide**. This document provides an exhaustive walkthrough of the tool's features, forensic workflows, and specialized modules.
 
 ---
 
 ## 🧭 The Forensic Lifecycle
 
-A typical investigation in AuraForensics follows a structured four-phase workflow:
+A typical investigation in MemNet follows a structured four-phase workflow:
 
-1.  **Ingestion & Hashing**: The analyst selects a memory dump. AuraForensics automatically calculates its **MD5 and SHA256 hashes** to ensure evidence chain-of-custody and integrity.
+1.  **Ingestion & Hashing**: The analyst selects a memory dump. MemNet automatically calculates its **MD5 and SHA256 hashes** to ensure evidence chain-of-custody and integrity.
 2.  **Automated Triage**: Upon ingestion, the tool triggers background workers for **Process Enumeration**, **Socket Analysis**, and **VAD Mapping**.
 3.  **Specialist Extraction**: Analysts trigger specialized "Deep Scan" workers to carve for specific artifacts like deep-web (Tor) traces, browser history, and hidden URLs.
 4.  **AI Correlation**: The **AI Analyst** is used to synthesize findings from the volatile session database into a coherent intelligence report.
@@ -65,7 +65,7 @@ Analyzes Virtual Address Descriptors to distinguish between executable code and 
 Calculates cryptographic hashes using Python's `hashlib` at the moment of file selection. Both MD5 and SHA256 are provided for academic and professional standardization.
 
 ### **Secure Flush Mechanism**
-AuraForensics maintains a strict **Zero-Persistence Policy**. When the `MainWindow` is closed:
+MemNet maintains a strict **Zero-Persistence Policy**. When the `MainWindow` is closed:
 1. All database handles are dropped.
 2. The `mft_session.db` file is physically deleted from the local disk.
 3. Memory buffers are cleared.
@@ -80,4 +80,4 @@ AuraForensics maintains a strict **Zero-Persistence Policy**. When the `MainWind
 
 ---
 
-*AuraForensics: Advanced Memory Intelligence for Modern Investigations.*
+*MemNet: Advanced Memory Intelligence for Modern Investigations.*

@@ -1,15 +1,15 @@
 from PyQt6.QtWidgets import QFileDialog, QMessageBox, QInputDialog, QLineEdit
 import os
 import json
-from auraforensic.views.main_window import MainWindow
-from auraforensic.controllers.file_import_worker import FileImportWorker
-from auraforensic.controllers.vol_scan_worker import VolScanWorker
-from auraforensic.controllers.ai_worker import AIWorker
-from auraforensic.controllers.specialist_worker import SpecialistWorker
-from auraforensic.controllers.vad_worker import VadCacheWorker
-from auraforensic.forensics.tor_analyzer import TorAnalyzer
-from auraforensic.constants.plugin_map import PLUGIN_MAP
-from auraforensic.models.database import init_db, insert_scan_result, cleanup_session_db
+from memnet.views.main_window import MainWindow
+from memnet.controllers.file_import_worker import FileImportWorker
+from memnet.controllers.vol_scan_worker import VolScanWorker
+from memnet.controllers.ai_worker import AIWorker
+from memnet.controllers.specialist_worker import SpecialistWorker
+from memnet.controllers.vad_worker import VadCacheWorker
+from memnet.forensics.tor_analyzer import TorAnalyzer
+from memnet.constants.plugin_map import PLUGIN_MAP
+from memnet.models.database import init_db, insert_scan_result, cleanup_session_db
 
 class MainController:
     def __init__(self):
@@ -122,7 +122,7 @@ class MainController:
             
             # Run Tor Triage Analysis
             if self.current_filepath:
-                from auraforensic.forensics.tor_analyzer import TorAnalyzer
+                from memnet.forensics.tor_analyzer import TorAnalyzer
                 analyzer = TorAnalyzer(self.session_data)
                 triage_res = analyzer.analyze()
                 status = triage_res.get("status", "Negative")
@@ -185,7 +185,7 @@ class MainController:
             
             # Store in session for AI/Re-use
             self.session_data[plugin_name] = results
-            from auraforensic.models.database import insert_scan_result
+            from memnet.models.database import insert_scan_result
             insert_scan_result(plugin_name, json.dumps(results))
 
             # Update Dashboard Stats
@@ -285,7 +285,7 @@ class MainController:
             view = self.view.extraction_view
             dash = self.view.dashboard_view
             # Sync to Session DB
-            from auraforensic.models.database import insert_scan_result
+            from memnet.models.database import insert_scan_result
             insert_scan_result(f"specialist_{task_type}", json.dumps(results))
             
             # Update Dashboard
@@ -354,7 +354,7 @@ class MainController:
         if not api_key:
             return # User cancelled or key still missing
 
-        from auraforensic.ai.gemini_client import GeminiClient
+        from memnet.ai.gemini_client import GeminiClient
         self.ai_client = GeminiClient(api_key)
         self.chat_session = self.ai_client.start_chat()
         
@@ -363,11 +363,11 @@ class MainController:
         self.view.ai_analyst_view.status_label.setText("// AI SESSION INITIALIZED")
         
         # Pull initial context from Session DB
-        from auraforensic.models.database import get_all_scan_results
+        from memnet.models.database import get_all_scan_results
         results = get_all_scan_results()
         count = len(results)
         
-        self.view.ai_analyst_view.append_message("SYSTEM", f"AuraForensics Intelligence Layer active. Session DB contains {count} scan artifacts. How can I assist?")
+        self.view.ai_analyst_view.append_message("SYSTEM", f"MemNet Intelligence Layer active. Session DB contains {count} scan artifacts. How can I assist?")
 
     def handle_chat_sent(self):
         prompt = self.view.ai_analyst_view.chat_input.text().strip()
@@ -379,7 +379,7 @@ class MainController:
         self.view.ai_analyst_view.send_btn.setEnabled(False)
         self.view.ai_analyst_view.status_label.setText("// THINKING...")
 
-        from auraforensic.controllers.ai_chat_worker import AIChatWorker
+        from memnet.controllers.ai_chat_worker import AIChatWorker
         worker = AIChatWorker(self.chat_session, prompt)
         self.active_scanners.append(worker)
         worker.finished.connect(lambda res: self.ai_chat_finished(worker, res))
@@ -407,13 +407,13 @@ class MainController:
             if tool_name == "run_forensic_scan":
                 plugin = args.get("plugin_name")
                 pid = args.get("pid")
-                from auraforensic.forensics.vol_engine import VolatilityEngine
+                from memnet.forensics.vol_engine import VolatilityEngine
                 engine = VolatilityEngine(self.current_filepath)
                 # Note: We run this synchronously to give immediate feedback to AI
                 res = engine.run_plugin(plugin)
                 result_str = json.dumps(res[:50]) # Truncate for AI brevity
             elif tool_name == "get_session_results":
-                from auraforensic.models.database import get_all_scan_results
+                from memnet.models.database import get_all_scan_results
                 results = get_all_scan_results()
                 # Briefly summarize the results for the AI
                 summary = {}
@@ -432,7 +432,7 @@ class MainController:
 
     def handle_ai_continuation(self, prompt):
         """Continuity for AI conversations after tool execution."""
-        from auraforensic.controllers.ai_chat_worker import AIChatWorker
+        from memnet.controllers.ai_chat_worker import AIChatWorker
         worker = AIChatWorker(self.chat_session, prompt)
         self.active_scanners.append(worker)
         worker.finished.connect(lambda res: self.ai_chat_finished(worker, res))
@@ -443,7 +443,7 @@ class MainController:
     def update_ai_artifact_count(self):
         """Syncs the UI counter with session DB state."""
         try:
-            from auraforensic.models.database import get_all_scan_results
+            from memnet.models.database import get_all_scan_results
             results = get_all_scan_results()
             self.view.ai_analyst_view.artifact_counter.setText(f"ARTIFACTS AVAILABLE: {len(results)}")
         except:
@@ -476,7 +476,7 @@ class MainController:
         self.view.graph_view.info_label.setText(f"// ANALYZING RELATIONSHIPS FOR PID {target_pid}")
         
         # Load data from DB
-        from auraforensic.models.database import get_all_scan_results
+        from memnet.models.database import get_all_scan_results
         rows = get_all_scan_results()
         
         ps_data = []
@@ -652,7 +652,7 @@ class MainController:
         self.run_tor_scout()
 
     def run_tor_scout(self):
-        from auraforensic.controllers.specialist_worker import TorScoutWorker
+        from memnet.controllers.specialist_worker import TorScoutWorker
         self.worker = TorScoutWorker(self.current_filepath)
         self.worker.progress.connect(lambda p: None) # Silent progress for now
         self.worker.finished.connect(self.on_tor_scout_finished)

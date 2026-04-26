@@ -1,7 +1,7 @@
-# AuraForensics: Unified Technical Report
+# MemNet: Unified Technical Report
 
 ## 1. Project Overview
-AuraForensics is a state-of-the-art memory forensics platform that bridges the gap between raw data extraction and actionable intelligence. By integrating **Volatility 3**, **YARA-based specialist carving**, and **Google Gemini AI**, the platform provides investigators with a high-fidelity diagnostic environment.
+MemNet is a state-of-the-art memory forensics platform that bridges the gap between raw data extraction and actionable intelligence. By integrating **Volatility 3**, **YARA-based specialist carving**, and **Google Gemini AI**, the platform provides investigators with a high-fidelity diagnostic environment.
 
 ## 2. System Architecture
 The application follows a Controller-Worker pattern to ensure UI responsiveness while executing heavy forensic tasks.
@@ -142,4 +142,4 @@ QHeaderView::section {
 ---
 
 ## 5. Conclusion
-AuraForensics provides a unified interface for complex memory forensics, combining the depth of traditional tools with modern AI analysis and visualization. The platform is optimized for performance, security (masked PII), and investigator workflow efficiency.
+MemNet provides a unified interface for complex memory forensics, combining the depth of traditional tools with modern AI analysis and visualization. The platform is optimized for performance, security (masked PII), and investigator workflow efficiency.

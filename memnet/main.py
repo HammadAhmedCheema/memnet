@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QApplication
-from auraforensic.models.database import init_db
-from auraforensic.controllers.main_controller import MainController
+from memnet.models.database import init_db
+from memnet.controllers.main_controller import MainController
 
 def main():
     # Initialize SQLite database
