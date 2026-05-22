@@ -101,4 +101,4 @@ python -m memnet.main
 
 ---
 
-*Developed for the Digital Forensics Course (Sem 6).*
+*Developed for the Digital Forensics Course CY3006 (Sem 6).*
