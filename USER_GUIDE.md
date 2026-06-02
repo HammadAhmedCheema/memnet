@@ -89,7 +89,7 @@ MemNet maintains a strict **Zero-Persistence Policy**. When the `MainWindow` is 
 
 - **Wait for Triage**: Specialist extraction works most accurately after Phase 1-3 triage is 100% complete.
 - **AI Prompting**: Use specific prompts like *"Correlate PID 440 with the network connections in the database"* for the best results from the AI Analyst.
-- **Integrity First**: Always record the hashes displayed on the Dashboard before starting your analysis.
+- **Integrity First**: Always record the hashes displayed on the Dashboard before starting your analysis to verify evidence integrity.
 
 ---
 
